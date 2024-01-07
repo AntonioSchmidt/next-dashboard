@@ -71,7 +71,7 @@ export async function createInvoice(prevState: State, formData: FormData): Promi
     return {};
 }
 
-export async function updateInvoice(prevState: State, id: string, formData: FormData) {
+export async function updateInvoice(id: string, prevState: State, formData: FormData): Promise<State> {
     const validatedFields = UpdateInvoice.safeParse(Object.fromEntries(formData.entries()));
 
 
