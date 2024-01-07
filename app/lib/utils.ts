@@ -67,3 +67,9 @@ export const generatePagination = (currentPage: number, totalPages: number) => {
     totalPages,
   ];
 };
+
+export const executeFunctions = (...fns: Function[]) => {
+  return (...args: any[]) => {
+    return fns.map((fn) => fn( ...args));
+  }
+}
