@@ -40,7 +40,7 @@ export type State = {
     message?: string | null;
 };
 
-export async function createInvoice(prevState: State, formData: FormData) {
+export async function createInvoice(prevState: State, formData: FormData): Promise<State> {
     const validatedFields = CreateInvoice.safeParse(Object.fromEntries(formData.entries()));
 
 
@@ -68,6 +68,7 @@ export async function createInvoice(prevState: State, formData: FormData) {
         };
     }
     onCompletePathFunctions(path);
+    return {};
 }
 
 export async function updateInvoice(prevState: State, id: string, formData: FormData) {
@@ -91,6 +92,7 @@ export async function updateInvoice(prevState: State, id: string, formData: Form
     WHERE id = ${id}
   `;
     onCompletePathFunctions(path);
+    return {};
 }
 
 export async function deleteInvoice(id: string) {
