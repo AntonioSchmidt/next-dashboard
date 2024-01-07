@@ -5,10 +5,9 @@ import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import {executeFunctions} from "@/app/lib/utils";
-import {signIn} from "@/auth";
+import {signIn, signOut} from "@/auth";
 import {AuthError} from "next-auth";
 
-type Primitive = string | number | boolean | undefined | null;
 
 const FormSchema = z.object({
     id: z.string(),
@@ -56,11 +55,6 @@ export async function createInvoice(prevState: State, formData: FormData) {
     const { customerId, amount, status } = validatedFields.data;
     const amountInCents = amount * 100;
     const date = new Date().toISOString().split('T')[0];
-
-    const onComplete = () => {
-        revalidatePath(path);
-        redirect(path)
-    }
 
     try {
         await sql`
@@ -121,4 +115,8 @@ export async function authenticate(
         }
         throw error;
     }
+}
+
+export async function logout() {
+    await signOut();
 }
